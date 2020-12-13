@@ -50,14 +50,15 @@ sudo docker run --name qzBlazor -e db:provider=sqlite -e db:conn="Data Source=de
 - 数据同步
 
 ### 应用
-![yingyong01](https://github.com/SmartforXiaoYuan/QuartzCore.Blazor/blob/master/Picture/yingyong01.jpg)
-
+![](https://github.com/SmartforXiaoYuan/QuartzCore.Blazor/blob/master/Picture/yingyong01.jpg)
+![](https://github.com/SmartforXiaoYuan/QuartzCore.Blazor/blob/master/Picture/yingyong02.jpg)
 
 ### 新增任务项
 
 1. Http WebApi调用方式比较独立，只需要配置api地址支持GET和POST，无需重新部署平台
 2. 程序集调用，需要继承JobBase，方便记录日志，需求重新部署平台
-
+![](https://github.com/SmartforXiaoYuan/QuartzCore.Blazor/blob/master/Picture/zuoye01.jpg)
+![](https://github.com/SmartforXiaoYuan/QuartzCore.Blazor/blob/master/Picture/zuoye02.jpg)
 
 
 注释:报警邮箱是预留的字段，由于没有公共的邮箱服务器，而且也没必要这边先预留，小伙伴若有需求可自己添加上逻辑
