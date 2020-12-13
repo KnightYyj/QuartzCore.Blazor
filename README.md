@@ -50,7 +50,7 @@ sudo docker run --name qzBlazor -e db:provider=sqlite -e db:conn="Data Source=de
 - 数据同步
 
 ### 应用
-![yingyong01]https://github.com/SmartforXiaoYuan/QuartzCore.Blazor/blob/master/Picture/yingyong01.jpg
+![yingyong01](https://github.com/SmartforXiaoYuan/QuartzCore.Blazor/blob/master/Picture/yingyong01.jpg)
 
 
 ### 新增任务项
