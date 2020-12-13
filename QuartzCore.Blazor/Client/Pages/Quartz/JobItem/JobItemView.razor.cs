@@ -90,6 +90,7 @@ namespace QuartzCore.Blazor.Client.Pages.Quartz.JobItem
             var result = await DrawerSvr.CreateDialogAsync<JobItemEdit, int?, MessageModel<TasksQzDto>>(null, title: "新增任务项", width: 750);
             if (result != null)
             {
+                result.response.AppName = _appItems.Find(a => a.Id == result.response.AppId)?.Name;
                 datas.Add(result.response);
             }
         }
