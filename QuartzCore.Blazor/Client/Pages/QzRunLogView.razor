@@ -1,0 +1,87 @@
+﻿@page "/qzrunlogview"
+@using QuartzCore.Blazor.Shared;
+
+<PageHeader Title="运行日志列表">
+    <PageHeaderContent>
+        <Form Layout="@FormLayout.Inline" Model="queryDto">
+            <FormItem Label="应用名称">
+                <Select @bind-Value="@queryDto.AppId" AllowClear="true" TItemValue="string" TItem="string" Style="width:160px">
+                    <SelectOptions>
+                        @foreach (var item in _appItems)
+                        {
+                            <SelectOption TItemValue="string" TItem="string" Value=@item.Id Label=@item.Name />
+                        }
+                    </SelectOptions>
+                </Select>
+            </FormItem>
+            <FormItem Label="任务名称">
+                <Select @bind-Value="@queryDto.TasksQzId" AllowClear="true" TItemValue="int" TItem="string" Style="width:160px">
+                    <SelectOptions>
+                        @foreach (var item in _qzItems)
+                        {
+                            <SelectOption TItemValue="int" TItem="string" Value=@item.Id Label=@item.Name />
+                        }
+                    </SelectOptions>
+                </Select>
+            </FormItem>
+            <FormItem Label="时间范围">
+                <RangePicker @bind-Value="@context.RangePicker" />
+            </FormItem>
+
+            <FormItem>
+                <Button Type="@ButtonType.Primary" OnClick="OnSearch">检索</Button>
+            </FormItem>
+        </Form>
+    </PageHeaderContent>
+</PageHeader>
+
+<Table Loading="@isLoading" @ref="tableRef" DataSource="@datas" @bind-PageSize="@queryDto.PageSize" @bind-PageIndex="@queryDto.PageIndex" Total="@total" OnChange="OnChange" TItem="QzRunLogDto">
+    <AntDesign.Column Width="160" @bind-Field="@context.TasksQzName" Sortable>
+        <a style="color:#1890ffb8"> @context.TasksQzName </a>
+    </AntDesign.Column>
+    <AntDesign.Column Width="160" @bind-Field="@context.AppName" Sortable />
+    <AntDesign.Column Width="100" @bind-Field="@context.LogType" Sortable>
+
+        @if (context.LogType == 0)
+        {
+            var color = "green";
+            var tag = context.LogType;
+            <AntDesign.Tag Color="@color">@tag</AntDesign.Tag>
+        }
+        else
+        {
+            var color = "volcano";
+            var tag = context.LogType;
+            <AntDesign.Tag Color="@color">@tag</AntDesign.Tag>
+        }
+
+    </AntDesign.Column>
+    <AntDesign.Column Width="160" @bind-Field="@context.LogTime" Sortable />
+    <AntDesign.Column Width="100" @bind-Field="@context.Milliseconds" />
+
+    <AntDesign.Column Width="220" @bind-Field="@context.LogText">
+        @if (@context.LogText.Length > 50)
+        {
+            <AntDesign.Tooltip Placement="@PlacementType.LeftTop" Title="@context.LogText">
+                <span>@context.LogText.Substring(0, 50)</span>
+            </AntDesign.Tooltip>
+        }
+        else
+        {
+            <span>@context.LogText</span>
+        }
+    </AntDesign.Column>
+</Table>
+<style>
+    .ant-page-header-heading-title {
+        color: #e68c8c;
+        !important
+    }
+
+    .ant-form-item-control-input-content {
+        margin-left: 30px;
+    }
+</style>
+@code {
+
+}

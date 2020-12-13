@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FreeSql.DbContext" Version="2.0.105" />
+    <PackageReference Include="FreeSql.Provider.MySql" Version="2.0.105" />
+    <PackageReference Include="FreeSql.Provider.Sqlite" Version="2.0.105" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\QuartzCore.Common\QuartzCore.Common.csproj" />
+    <ProjectReference Include="..\QuartzCore.Data.Entity\QuartzCore.Data.Entity.csproj" />
+  </ItemGroup>
+
+</Project>

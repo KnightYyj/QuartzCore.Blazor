@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Quartz" Version="3.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\QuartzCore.Data.Freesql\QuartzCore.Data.Freesql.csproj" />
+    <ProjectReference Include="..\QuartzCore.IService\QuartzCore.IService.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,36 @@
+﻿@using QuartzCore.Blazor.Shared;
+@inherits DrawerTemplate<string?, MessageModel<bool>>
+
+<Spin Spinning="isLoading">
+    @if (model != null)
+    {
+        <Form OnFinish="OnSave" Model="@model" LabelCol="new ColLayoutParam() {Span = 6 }">
+            <FormItem Label="应用名称">
+                <Input @bind-Value="@context.Name" />
+            </FormItem>
+            <FormItem Label="应用标识">
+                <Input Disabled="isEdit" @bind-Value="@context.Id" />
+            </FormItem>
+            <FormItem Label="是否启用">
+                <Switch @bind-Value="@context.Enabled" />
+            </FormItem>
+            <FormItem>
+                <Button Type="@ButtonType.Primary" HtmlType="submit">提交</Button>
+                <Button OnClick="OnCancel">取消</Button>
+            </FormItem>
+        </Form>
+    }
+</Spin>
+
+
+<style>
+
+    .ant-form-item-control-input-content {
+        margin-left: 30px;
+    }
+
+    .ant-btn ant-btn-default {
+        margin-left: 10px;
+        !important
+    }
+</style>

@@ -1,0 +1,115 @@
+# QuartzCore.Blazor
+这是一个基于.net5开发的轻量级Quartz配置中心
+
+1. 部署简单，支持docker部署
+2. 支持定时Http WebApi调用(推荐)，亦支持本程序集直接调用
+3. 方便统计接入应用和任务项
+4. Blazor wasm模式，使用了ant-design-blazor UI 
+5. 支持随时修改Trigger,启动立刻生效，无需重启应用
+6. 使用Freesql为数据访问组件，亦可学习交流
+
+在线浏览地址：http://49.232.221.48:5001/
+
+### 数据库
+
+使用数据库来存储数据，提供了sqlite和mysql 可以根据用户配置选择，其他数据库亦可支持。使用Freesql为数据访问组件。Freesql对多数据库的支持更加强劲，特别是对国产数据库的支持。但是因为没有国产数据库的测试环境，本项目并未支持，如果有需要我可是开分支尝试支持，但是测试工作就要靠用户啦。
+
+### 初始化数据库
+
+用户只需要手工建一个空库，所有的表在第一次启动的时候都会自动生成。provider对照：
+mysql = MySql
+sqlite = Sqlite
+
+### 运行服务端
+
+```
+sudo docker run --name qzBlazor -e db:provider=sqlite -e db:conn="Data Source=dev_qzblazor.db" -p 5001:5001 qzblazor/apkimg
+```
+
+注意：qzblazor/apkimg 是我构建的镜像，我未上传仓库 需要docker build  
+
+### 为什么写quartzBlazor
+
+1.  方便大家能使用，中小公司开箱即用很是方便。（之前也写过vue的版本[ScheduleJob.Core](https://github.com/SmartforXiaoYuan/ScheduleJob.Core)）
+
+2. 为了实操Blazor和FreeSql  能和大家一起动手写ant-design-blazor,能够体验一下,让更多人的知道Blazor和FreeSql
+
+
+### 为什么 独立QuartzCore.Tasks类库
+
+1. 主要的原因是反射的Job注入的生命周期和service生命周期不一致，会报错 ; 
+
+### Quartz使用场景
+
+- redis缓存预热
+- 业务补偿机制
+- 数据同步
+
+### 应用
+
+
+
+### 新增任务项
+
+1. Http WebApi调用方式比较独立，只需要配置api地址支持GET和POST，无需重新部署平台
+2. 程序集调用，需要继承JobBase，方便记录日志，需求重新部署平台
+
+
+
+注释:报警邮箱是预留的字段，由于没有公共的邮箱服务器，而且也没必要这边先预留，小伙伴若有需求可自己添加上逻辑
+
+
+
+### 任务日志
+
+默认只保留每条任务的20条执行记录，亦可根据需要配置
+
+
+
+#####  关键问题说明，
+
+_scheduler.ScheduleJob是添加任务，需要等待触发时间才开始执行
+
+暂停调用  _scheduler.PauseJob 那么如果你修改了任务项的信息，那便不会重新添加到_scheduler中去，之前我判断CheckExists 若存在就_scheduler.ResumeJob 执行恢复操作 是不正确的
+
+1. AddJob 貌似没有重新指定 trigger	 
+2. 官网的issue中也有发表疑惑（https://github.com/quartznet/quartznet/issues/844）
+3. _scheduler.RescheduleJob 可更新时间表达式、
+
+暂时解决方案：目前先选用PauseJob之后,再去DeleteJob
+
+##### To Do
+
+SimpleTrigger模式下 WithRepeatCount 若设置了自动退出，目前需要手动更新下TasksQz.IsStart=false
+
+
+
+### Todo
+
+- [ ] 暂无登陆，初始化管理员密码，第一次运行程序需要初始化管理员密码
+
+- [ ] IDS4
+
+- [ ] 监听任务状态，避免运行状态不统一
+
+- [ ] 可支持手动上传DLL方式，动态加载dll并运行,热插拔(暂缓---个人觉得Job补偿机制webapi模式也够用)
+
+- [ ] ant-design-blazor的RangePicker时间选择器还未完善，无法选择具体的时间。目前只能选择日期
+
+- [ ] 首页图表比较丑，目前还没有适合的，要么组件冲突(因为已经使用ant-design-blazor)，有点遗憾
+
+  
+
+### 结尾
+
+初认Blazor  
+
+其实不然，Blazor类似Vue Cli 官网说明也很简单用C#代替js交互， 一个新的名词wasm。同样也是前后分离。使用HttpClient调用 Web API，本项目为了方便部署就建了同一个Host，只需要再startup中指定Endpoints
+
+目前wasm的Blazor性能还有很大提升空间。大家可以多关注Blazor以及ant-design-blazor
+
+ant-design-blazor还是起步阶段，本次使用体会下来，还有很大的空间需要大家来开发优化，对于初学者来说文档不全，目前来说做需求时候有点吃力，有点不香
+
+最后有兴趣去了解UI的小伙伴可以关注下ant-design-blazor和BootstrapBlazor  目前觉得BootstrapBlazor库稍微全一点
+
+**如果你有更好的建议可以提issue或者提交pro 。感谢大家**

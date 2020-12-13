@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\QuartzCore.Data.Entity\QuartzCore.Data.Entity.csproj" />
+    <ProjectReference Include="..\..\QuartzCore.Data.Freesql\QuartzCore.Data.Freesql.csproj" />
+    <ProjectReference Include="..\..\QuartzCore.Service\QuartzCore.Service.csproj" />
+    <ProjectReference Include="..\..\QuartzCore.Tasks\QuartzCore.Tasks.csproj" />
+    <ProjectReference Include="..\Client\QuartzCore.Blazor.Client.csproj" />
+    <ProjectReference Include="..\Shared\QuartzCore.Blazor.Shared.csproj" />
+  </ItemGroup>
+
+
+</Project>

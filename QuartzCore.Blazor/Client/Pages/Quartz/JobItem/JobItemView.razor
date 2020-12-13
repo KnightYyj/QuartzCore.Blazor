@@ -1,0 +1,167 @@
+﻿@page "/jobitemview"
+@using QuartzCore.Blazor.Shared;
+
+<PageHeader Title="任务项列表" Subtitle="维护系统可用任务项">
+    <PageHeaderContent>
+        <Form Layout="@FormLayout.Inline" Model="queryDto">
+            <FormItem Label="应用名称">
+                <Select @bind-Value="@queryDto.AppId" AllowClear="true" TItemValue="string" TItem="string" Style="width:160px">
+                    <SelectOptions>
+                        @foreach (var item in _appItems)
+                        {
+                            <SelectOption TItemValue="string" TItem="string" Value=@item.Id Label=@item.Name />
+                        }
+                    </SelectOptions>
+                </Select>
+            </FormItem>
+            <FormItem Label="任务名称">
+                <Input @bind-Value="queryDto.Name" />
+            </FormItem>
+            <FormItem>
+                <Button Type="@ButtonType.Primary" OnClick="OnSearch">检索</Button>
+            </FormItem>
+            @*<FormItem>
+                    <Button Type="@ButtonType.Primary" OnClick="OnSearch">执行一次</Button>
+                </FormItem>*@
+        </Form>
+    </PageHeaderContent>
+    <PageHeaderExtra>
+        <Button Type="@ButtonType.Primary" OnClick="OnAdd">添加任务</Button>
+    </PageHeaderExtra>
+</PageHeader>
+
+<Table Loading="@isLoading" @ref="tableRef" Bordered=@true Size=@TableSize.Small DataSource="@datas" @bind-PageSize="@queryDto.PageSize" @bind-PageIndex="@queryDto.PageIndex" OnChange="OnChange" Total="@total" TItem="TasksQzDto">
+    <AntDesign.Column Width="160" @bind-Field="@context.Name" Sortable>
+        <a style="color:#1890ffb8"> @context.Name </a>
+    </AntDesign.Column>
+    @*<AntDesign.Column @bind-Field="@context.AppId" Sortable />*@
+    <AntDesign.Column Width="160" @bind-Field="@context.AppName" Sortable />
+    <AntDesign.Column Width="120" @bind-Field="@context.Cron">
+        @if (@context.IsCron)
+        {
+            <span>@context.Cron</span>
+        }
+        else
+        {
+            <span>@context.IntervalSecond 秒</span>
+        }
+    </AntDesign.Column>
+
+    @*<AntDesign.Column @bind-Field="@context.Scope" Sortable>
+            <Tag>@context.Scope</Tag>
+        </AntDesign.Column>*@
+    <AntDesign.Column Width="90" @bind-Field="@context.RunTimes" Sortable />
+    <AntDesign.Column Width="100" @bind-Field="@context.ApiUrl">
+        @if (@context.IsCron)
+        {
+            <span>@context.ApiUrl</span>
+        }
+        else
+        {
+            <span>@context.AssemblyName</span><span>.@context.ClassName</span>
+        }
+
+    </AntDesign.Column>
+    <AntDesign.Column Width="80" @bind-Field="@context.IsStart">
+        @*<Icon Type="@(context.IsStart? "check-circle":"close-circle")" Theme="outline" Style="@(context.IsStart? "color:green":"color:red")" />*@
+        @if (context.IsStart == true)
+        {
+            var color = "green";
+            var tag = "启用";
+            <Tag Color="@color">@tag</Tag>
+        }
+        else
+        {
+            var color = "volcano";
+            var tag = "未启用";
+            <Tag Color="@color">@tag</Tag>
+        }
+    </AntDesign.Column>
+    <AntDesign.Column Width="120" @bind-Field="@context.Remark">
+        @if (@context.Remark.Length > 10)
+        {
+            <AntDesign.Tooltip Placement="@PlacementType.LeftTop" Title="@context.Remark">
+                <span>@context.Remark.Substring(0, 10)</span>
+            </AntDesign.Tooltip>
+        }
+        else
+        {
+            <span>@context.Remark</span>
+        }
+    </AntDesign.Column>
+    <AntDesign.Column Width="60" @bind-Field="@context.Logs">
+        @if (@context.Logs.Any())
+        {
+            var color = "geekblue";
+            var logText = "";
+            foreach (var item in context.Logs)
+            {
+                var text = item.LogText;
+                if (item.LogText.Length > 50)
+                {
+                    text = item.LogText.Substring(0, 50);
+                }
+                logText += $"执行时间：{item.LogTime} {text} ";
+            }
+            <AntDesign.Tooltip Placement="@PlacementType.LeftTop" Title="logText">
+                <Tag Color="@color">日志</Tag>
+            </AntDesign.Tooltip>
+        }
+        else
+        {
+            var color = "geekblue";
+            var logText = "暂无日志";
+            <AntDesign.Tooltip Placement="@PlacementType.LeftTop" Title="logText">
+                <Tag Color="@color">日志</Tag>
+            </AntDesign.Tooltip>
+        }
+
+    </AntDesign.Column>
+
+    <AntDesign.Column Width="200" Title="操作" TData="object">
+        @if (context.IsStart)
+        {
+            <Button Size=@size Class="btnStop" OnClick="x=>OnStop(context)">停止</Button>
+        }
+        else
+        {
+            <Button Size=@size Class="btnStart" OnClick="x=>OnStart(context)">启动</Button>
+        }
+        <Button Size=@size OnClick="x=>OnEdit(context)">编辑</Button>
+        <Button Size=@size OnClick="x=>OnDelete(context)" Danger>删除</Button>
+    </AntDesign.Column>
+</Table>
+<style>
+    .ant-page-header-heading-title {
+        color: #e68c8c;
+        !important
+    }
+
+    .ant-form-item-control-input-content {
+        margin-left: 30px;
+    }
+
+    .ant-btn ant-btn-default {
+        margin-left: 10px;
+    }
+
+    .ant-page-header {
+        margin-bottom: 20px
+    }
+
+    .btnStart {
+        background: #99CC33;
+        border-color: #99CC33;
+        margin-right: 5px;
+    }
+
+    .btnStop {
+        background: #FFCC66;
+        border-color: #FFCC66;
+        margin-right: 5px;
+    }
+</style>
+@code
+{
+    string size = "Small";
+}

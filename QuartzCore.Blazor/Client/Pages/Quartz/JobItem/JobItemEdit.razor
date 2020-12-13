@@ -1,0 +1,128 @@
+﻿@using QuartzCore.Blazor.Shared;
+
+@inherits DrawerTemplate<int?, MessageModel<TasksQzDto>>
+
+<Spin Spinning="isLoading">
+    @if (model != null)
+    {
+        <Form OnFinish="OnSave" Model="@model" LabelCol="new ColLayoutParam() {Span = 6 }">
+            <FormItem Label="任务项名称">
+                <Input @bind-Value="context.Name" />
+            </FormItem>
+            <FormItem Label="任务所属应用">
+                <Select @bind-Value="@context.AppId" AllowClear="true" TItemValue="string" TItem="string" Style="width:320px">
+                    <SelectOptions>
+                        @foreach (var item in _appItems)
+                        {
+                            <SelectOption TItemValue="string" TItem="string" Value=@item.Id Label=@item.Name />
+                        }
+                    </SelectOptions>
+                </Select>
+            </FormItem>
+            <FormItem Label="是否Cron">
+                <Switch Disabled="isEdit" @bind-Value="@context.IsCron" />
+                <span style="float:right;color: #aaa;">(True：Cron模式，False：Simple模式)</span>
+            </FormItem>
+            @if (context.IsCron)
+            {
+                <FormItem Label="Cron表达式">
+                    <Popover Placement="@PlacementType.TopLeft" TitleTemplate="@_text" ContentTemplate="@_content">
+                        <Input @bind-Value="context.Cron" TValue="string" OnChange="x=>OnValidate()"/>
+                    </Popover>
+                    @*<Icon Type="exclamation-circle" Theme="outline" Style="color:#848445;font-size: 32px;" />*@
+                    <AntDesign.Tooltip Placement="@PlacementType.LeftTop" Title="@(_nextTime)">
+                        <Icon Type="exclamation-circle" Theme="outline" Style="color:#848445;font-size: 32px;" />
+                        @* <Icon title="@(_nextTime)" Type="@(isCronValid? "check-circle":"close-circle")" Theme="outline" Style="" color:green ;font-size: 32px;" />*@
+                    </AntDesign.Tooltip>
+                    <Icon Type="@(isCronValid? "check-circle":"close-circle")" Theme="outline" Style="@(isCronValid? "color:green ;font-size: 32px;":"color:red ;font-size: 32px;")" />
+                </FormItem>
+            }
+            else
+            {
+                <FormItem Label="执行间隔时间(s)">
+                    <AntDesign.InputNumber @bind-Value="@context.IntervalSecond" Min="1" DefaultValue="60"></AntDesign.InputNumber>
+                </FormItem>
+                <FormItem Label="执行次数">
+                    <AntDesign.InputNumber @bind-Value="@context.RunTimes" Min="1" DefaultValue="60"></AntDesign.InputNumber>
+                    <span style="float:right;color: #aaa;">(Simple模式：执行满次数，自动退出；配置0：默认一直执行)</span>
+                </FormItem>
+            }
+            <FormItem Label="是否Http">
+                <Switch Disabled="isEdit" @bind-Value="@context.IsApiUrl" />
+                <span style="float:right;color: #aaa;">(True：Http模式，False：程序集反射模式)</span>
+            </FormItem>
+
+            @if (context.IsApiUrl)
+            {
+                <FormItem Label="请求类型">
+                    <Select @bind-Value="@context.MethodType" DefaultValue=1 Style="width: 120px;" TItemValue="int" TItem="string">
+                        <SelectOptions>
+                            <SelectOption TItemValue="int" TItem="string" Value=1 Label="GET" />
+                            <SelectOption TItemValue="int" TItem="string" Value=2 Label="POST" />
+                        </SelectOptions>
+                    </Select>
+                </FormItem>
+                <FormItem Label="ApiUrl">
+                    <Input @bind-Value="@context.ApiUrl" />
+                </FormItem>
+                @if (context.MethodType == 2)
+                {
+                    <FormItem Label="Post传参">
+                        <TextArea @bind-Value="context.RequestValue" MinRows="3" />
+                    </FormItem>
+                }
+            }
+            else
+            {
+                <FormItem Label="程序集名称">
+                    <Input @bind-Value="context.AssemblyName" />
+                </FormItem>
+                <FormItem Label="任务所在类">
+                    <Input @bind-Value="context.ClassName" />
+                </FormItem>
+                <FormItem Label="执行传参">
+                    <Input @bind-Value="context.JobParams" />
+                </FormItem>
+            }
+            <FormItem Label="任务描述">
+                <TextArea @bind-Value="context.Remark" MinRows="3" Placeholder="请输入任务描述" />
+            </FormItem>
+            <FormItem Label="报警邮箱">
+                <TextArea @bind-Value="context.ErrorEmail" MinRows="1" Placeholder="预留字段(默认空)" />
+                <span style="float:right;color: #aaa;">(报错发送邮箱)</span>
+            </FormItem>
+            <FormItem>
+                <Button Type="@ButtonType.Primary" HtmlType="submit">保存</Button>
+                <Button OnClick="OnCancel">取消</Button>
+            </FormItem>
+        </Form>
+    }
+</Spin>
+
+<style>
+
+    .ant-btn-primary {
+        margin-left: 70px;
+    }
+
+    .ant-btn-default {
+        margin-left: 10px;
+    }
+</style>
+@code
+{
+    private RenderFragment _text =@<span style="color:lightsalmon">Cron表达式</span>;
+const int ButtonWidth = 70;
+private RenderFragment _content =
+@<div slot="content">
+    每隔5秒执行一次：*/5 * * * * ?<br />
+    每隔1分钟执行一次：0 */1 * * * ?<br />
+    每天23点执行一次：0 0 23 * * ?<br />
+    每天凌晨1点执行一次：0 0 1 * * ?<br />
+    每月1号凌晨1点执行一次：0 0 1 1 * ?<br />
+    每月最后一天23点执行一次：0 0 23 L * ?<br />
+    每周星期天凌晨1点实行一次：0 0 1 ? * L<br />
+    在26分、29分、33分执行一次：0 26,29,33 * * * ?<br />
+    每天的0点、13点、18点、21点都执行一次：0 0 0,13,18,21 * * ?<br />
+</div>;
+}

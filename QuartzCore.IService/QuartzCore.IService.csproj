@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\QuartzCore.Blazor\Shared\QuartzCore.Blazor.Shared.csproj" />
+    <ProjectReference Include="..\QuartzCore.Data.Entity\QuartzCore.Data.Entity.csproj" />
+  </ItemGroup>
+
+</Project>

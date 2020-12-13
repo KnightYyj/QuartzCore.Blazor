@@ -1,0 +1,169 @@
+﻿@inherits LayoutComponentBase
+@inject IJSRuntime JSRuntime
+<!--<div class="page">
+    <div class="sidebar">-->
+@*<NavMenu />*@
+<!--<MenuNav />
+    </div>
+
+    <div class="main">
+        <div class="top-row px-4">
+            <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
+        </div>
+
+        <div class="content px-4">
+            @Body
+        </div>
+    </div>
+</div>-->
+<Layout>
+    <Sider Theme="SiderTheme.Light" Collapsible Collapsed=@collapsed NoTrigger OnCollapse="OnCollapse">
+        @if (collapsed)
+        {
+            @*<div class="logo" />*@
+            <div class="qz-logo">QzB</div>
+        }
+        else
+        {
+            <div class="qz-logo">QuartzCoreBlazor</div>
+            @*<div class="logo-color" />*@
+        }
+        <Menu Theme=theme Mode="MenuMode.Inline" DefaultSelectedKeys=@(new[]{"1"})>
+            <MenuItem Key="1" RouterLink="/">
+                <Icon Style="font-size:20px" Type="home" Theme="outline" />
+                <span>首页</span>
+            </MenuItem>
+            <MenuItem Key="2" RouterLink="/appview">
+                <Icon Style="font-size:20px" Type="project" Theme="outline" />
+                <span>应用配置</span>
+            </MenuItem>
+            <MenuItem Key="3" RouterLink="/jobitemview">
+                <Icon Style="font-size:20px" Type="tablet" Theme="outline" />
+                <span>任务项</span>
+            </MenuItem>
+            <MenuItem Key="4" RouterLink="/qzrunlogview">
+                <Icon Style="font-size:20px" Type="calendar" Theme="outline" />
+                <span>系统日志</span>
+            </MenuItem>
+        </Menu>
+    </Sider>
+    <Layout Class="site-layout">
+        <Header Class="site-layout-background" Style="padding: 0;">
+            @if (collapsed)
+            {
+                <Icon Type="menu-unfold" Theme="outline" Class="trigger" OnClick="toggle" />
+            }
+            else
+            {
+                <Icon Type="menu-fold" Theme="outline" Class="trigger" OnClick="toggle" />
+            }
+            <Switch Checked="theme == MenuTheme.Dark" OnChange=changeTheme CheckedChildren=@("Dark") UnCheckedChildren=@("Light") />
+
+            <Icon Type="github" Theme="outline" Class="header-menu header-menu-first" OnClick="goGithub" />
+
+        </Header>
+        <Content Class="site-layout-background" Style="margin: 3px 3px;padding: 24px;min-height: 88vh;">
+            @Body
+        </Content>
+    </Layout>
+</Layout>
+
+
+<style>
+    .trigger {
+        font-size: 20px;
+        line-height: 44px;
+        padding: 0 24px;
+        cursor: pointer;
+        transition: color 0.3s;
+    }
+
+        .trigger:hover {
+            color: #1890ff;
+        }
+
+
+
+    .header-menu {
+        font-size: 26px;
+        line-height: 45px;
+        padding: 0 24px;
+        cursor: pointer;
+        transition: color 0.3s;
+        float: right;
+    }
+
+    .ant-layout-header {
+        height: 54px;
+        line-height: 54px;
+    }
+
+    .header-menu:hover {
+        color: #1890ff;
+    }
+
+    .header-menu-first {
+        margin-right: 26px;
+    }
+
+    .site-layout .site-layout-background {
+        background: #fff; /*#434a51*/
+    }
+
+    .ant-layout {
+        height: 100%;
+    }
+
+    .qz-logo {
+        height: 30px;
+        text-align: center;
+        font-size: 20px;
+        font-weight: bolder;
+        margin: 10px;
+    }
+
+    .logo-color {
+        height: 30px;
+        /*background: rgba(255, 255, 255, 0.2);*/
+        /*background-image: url(../img/logo-color.png);*/
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        margin: 10px;
+    }
+
+    .logo {
+        height: 30px;
+        /*background: rgba(255, 255, 255, 0.2);*/
+        /*background-image: url(../img/logo.png);*/
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        margin: 10px;
+    }
+</style>
+@code{ bool collapsed;
+
+    void toggle()
+    {
+        collapsed = !collapsed;
+    }
+
+    void OnCollapse(bool isCollapsed)
+    {
+        Console.WriteLine($"Collapsed: {isCollapsed}");
+    }
+
+    MenuTheme theme = MenuTheme.Light;
+
+    void changeTheme(bool value)
+    {
+        this.theme = value ? MenuTheme.Dark : MenuTheme.Light;
+    }
+
+    async Task goGithub()
+    {
+        await JSRuntime.InvokeAsync<object>("open", "https://www.baidu.com", "_blank");
+    }
+
+}

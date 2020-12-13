@@ -1,0 +1,68 @@
+﻿@page "/appview"
+@inherits AppViewBase
+@using QuartzCore.Blazor.Shared;
+
+
+<div class="headapp">应用列表</div>
+<div style="text-align:right">
+    @if (false)
+    {
+        <button @onclick="() => Modal.Open()">Open Modal</button>
+    }
+    <Button Type="primary" style="margin-bottom: 10px;" Size=@size OnClick="OnAdd">新建应用</Button>
+</div>
+
+
+<Table TItem="AppInputDto" DataSource="@datas"   >
+    <AntDesign.Column @bind-Field="@context.Name">
+        <a style="color:#1890ffb8"> @context.Name </a>
+    </AntDesign.Column>
+    <AntDesign.Column @bind-Field="@context.Id"></AntDesign.Column>
+    <AntDesign.Column @bind-Field="@context.Enabled">
+
+        @if (context.Enabled == true)
+        {
+            var color = "green";
+            var tag = "启用";
+            <Tag Color="@color">@tag</Tag>
+        }
+        else
+        {
+            var color = "volcano";
+            var tag = "未启用";
+            <Tag Color="@color">@tag</Tag>
+        }
+    </AntDesign.Column>
+    <AntDesign.Column Title="操作" TData="object" Style="width:225px">
+        <Button Size=@size OnClick="x=>OnEdit(context)">编辑</Button>
+        <Button Size=@size OnClick="x=>OnDelete(context)" Danger>删除</Button>
+    </AntDesign.Column>
+</Table>
+
+
+
+
+@*<AppAddModal @ref="modal" />*@
+<MComponent @ref="Modal"></MComponent>
+<style>
+    .headapp {
+        font-size: 20px;
+        padding: 8px 15px;
+        margin-bottom: 20px;
+        background-color: #f5f5f5;
+        color: #e68c8c;
+    }
+    .ant-form-item-control-input-content {
+        margin-left: 30px;
+    }
+
+    .ant-btn ant-btn-default {
+        margin-left: 10px;
+    }
+</style>
+@code {
+    //AppAddModal modal { get; set; }
+    private MComponent Modal { get; set; }
+    private string addStr = "新增应用";
+    private string editStr = "编辑应用";
+}
