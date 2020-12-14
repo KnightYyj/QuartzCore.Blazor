@@ -8,8 +8,8 @@ namespace QuartzCore.Blazor.Shared
 {
     public class DashDto
     {
-        public int appCount { get; set; } = 0;
-        public int jobItemCount { get; set; } = 0;
+        public int appCount { get; set; }  
+        public int jobItemCount { get; set; }  
 
         public ChartData[] ChartDatas { get; set; }
 
@@ -37,5 +37,14 @@ namespace QuartzCore.Blazor.Shared
         public int value { get; set; }
 
         public string festival { get; set; }
+    }
+
+    public class ChartDic
+    {
+        public string date { get; set; }
+
+        public int value { get; set; }
+
+        public int order { get; set; }
     }
 }

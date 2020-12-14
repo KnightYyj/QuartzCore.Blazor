@@ -8,6 +8,8 @@ using JetBrains.Annotations;
 using QuartzCore.MongoDB.DbContexts;
 using QuartzCore.Common;
 using QuartzCore.Common.Helper;
+using QuartzCore.MongoDB.Repositorys;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace QuartzCore.MongoDB
 {
@@ -24,7 +26,10 @@ namespace QuartzCore.MongoDB
                 {
                     options.ConnectionString = DbConn;
                 });
+                //services.AddScoped(typeof(IMongoRepository<>), typeof(MongoRepository<>));
+                services.TryAddScoped(typeof(IMongoRepository<>), typeof(MongoRepository<>));
             }
+
             return services;
         }
         public static IServiceCollection AddMongoDbContext<TContext>(this IServiceCollection services, [CanBeNull] Action<MongoDbContextOptions> optionsAction) where TContext : MongoDbContextBase

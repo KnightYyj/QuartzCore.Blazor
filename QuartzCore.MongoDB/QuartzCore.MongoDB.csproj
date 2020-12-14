@@ -8,15 +8,13 @@
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2020.3.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.12.0-beta1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\QuartzCore.Blazor\Shared\QuartzCore.Blazor.Shared.csproj" />
     <ProjectReference Include="..\QuartzCore.Common\QuartzCore.Common.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Repositorys\" />
   </ItemGroup>
 
 </Project>

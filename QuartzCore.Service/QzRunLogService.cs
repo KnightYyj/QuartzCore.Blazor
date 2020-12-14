@@ -4,6 +4,8 @@ using QuartzCore.Common.Helper;
 using QuartzCore.Data.Entity;
 using QuartzCore.Data.Freesql;
 using QuartzCore.IService;
+using QuartzCore.MongoDB.LogEntity;
+using QuartzCore.MongoDB.Repositorys;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,12 +19,14 @@ namespace QuartzCore.Service
         private FreeSqlContext _dbContext;
         private static string _logCount => Global.Config["logCount:num"];
 
-        private static object _syncObj = new object();
+        //private static object _syncObj = new object();
 
-        public QzRunLogService(FreeSqlContext context)
+        IMongoRepository<QzRunLogMoEntity> _mongoRepository;
+
+        public QzRunLogService(FreeSqlContext context, IMongoRepository<QzRunLogMoEntity> mongoRepository)
         {
             _dbContext = context;
-
+            _mongoRepository = mongoRepository;
         }
 
         //public async Task<List<TasksQzEntity>> GetAsync()
@@ -80,6 +84,16 @@ namespace QuartzCore.Service
             }
             await _dbContext.QzRunLogs.AddAsync(log);
             int x = await _dbContext.SaveChangesAsync();
+
+            QzRunLogMoEntity mlog = new QzRunLogMoEntity();
+            mlog.AppId = log.AppId;
+            mlog.TasksQzId = log.TasksQzId;
+            mlog.LogText = log.LogText;
+            mlog.LogTime = log.LogTime?.AddHours(8);
+            mlog.Milliseconds = log.Milliseconds;
+            mlog.LogType = (int)log.LogType;
+            await _mongoRepository.InsertAsync(mlog);
+
             result = x > 0;
             return result;
         }
