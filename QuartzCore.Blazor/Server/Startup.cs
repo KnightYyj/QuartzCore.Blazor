@@ -10,9 +10,11 @@ using Quartz.Impl;
 using Quartz.Spi;
 using QuartzCore.Blazor.Server.Middlewares;
 using QuartzCore.Common;
+using QuartzCore.Common.Helper;
 using QuartzCore.Data.Entity;
 using QuartzCore.Data.Freesql;
 using QuartzCore.IService;
+using QuartzCore.MongoDB;
 using QuartzCore.Service;
 using QuartzCore.Tasks;
 using System.Linq;
@@ -47,6 +49,7 @@ namespace QuartzCore.Blazor.Server
             services.AddTransient<Job_Demo1_Quartz>();
 
             services.AddSingleton<ISchedulerCenter, SchedulerCenterServer>();
+            services.AddMongoDbContext();
 
 
             services.AddControllersWithViews();
@@ -65,7 +68,7 @@ namespace QuartzCore.Blazor.Server
             {
                 app.UseExceptionHandler("/Error");
             }
-
+            app.UseErrorHandling();
             app.UseQuartzJobMildd(tasksQzService, schedulerCenter);
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
