@@ -9,8 +9,8 @@
 6. 使用Freesql为数据访问组件，亦可学习交流
 
 ## 记录
-删除了no_mongo分支,若不使用mongo自行注释
-修复post请求传参,默认需要JSON格式
+1.删除了no_mongo分支,若不使用mongo自行注释
+2.修复post请求传参,默认需要JSON格式
 
 ## 给个星星! ⭐️
 
