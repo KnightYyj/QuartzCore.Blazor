@@ -70,7 +70,7 @@ namespace QuartzCore.Blazor.Server.Controllers
             {
                 var log = logs.FindAll(x => x.TasksQzId == a.Id);
                 if (log != null && log.Any())
-                    a.Logs = _mapper.Map<List<QzRunLogDto>>(log.Take(5));
+                    a.Logs = _mapper.Map<List<QzRunLogDto>>(log.OrderByDescending(x=>x.LogTime).Take(5));
             });
             messageModel.response = dtos;
             messageModel.Total = ss.Total;
@@ -116,7 +116,7 @@ namespace QuartzCore.Blazor.Server.Controllers
                 app.MethodType = 0;
             else
             {
-                app.AssemblyName = "QuartzCore.Service";
+                app.AssemblyName = "QuartzCore.Tasks";
                 app.ClassName = "Job_HttpApi_Quartz";
             }
             var result = await _tasksQzService.AddAsync(app);

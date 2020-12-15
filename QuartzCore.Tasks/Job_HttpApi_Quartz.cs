@@ -47,7 +47,7 @@ namespace QuartzCore.Tasks
                         else
                         {
                             var postData = JsonHelper.ToJson(model.RequestValue);
-                            var rep = await HttpUtil.HttpPostAsync(model.ApiUrl, postData, null, 30000);
+                            var rep = await HttpUtil.HttpPostAsync(model.ApiUrl, postData,timeOut: 30000);
                             msg = rep;
                         }
                     }

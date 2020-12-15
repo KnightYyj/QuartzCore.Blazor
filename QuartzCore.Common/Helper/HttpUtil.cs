@@ -112,7 +112,7 @@ namespace QuartzCore.Common.Helper
             }
         }
 
-        public static Task<string> HttpPostAsync(string url, string postData = null, string contentType = null, int timeOut = 30000, Dictionary<string, string> headers = null)
+        public static Task<string> HttpPostAsync(string url, string postData = null, string contentType = "application/json", int timeOut = 30000, Dictionary<string, string> headers = null)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = "POST"; request.Timeout = timeOut;

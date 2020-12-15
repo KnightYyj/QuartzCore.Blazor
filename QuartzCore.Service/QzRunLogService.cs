@@ -71,6 +71,17 @@ namespace QuartzCore.Service
 
         public async Task<bool> AddAsync(QzRunLogEntity log)
         {
+            #region mongo
+            QzRunLogMoEntity mlog = new QzRunLogMoEntity();
+            mlog.AppId = log.AppId;
+            mlog.TasksQzId = log.TasksQzId;
+            mlog.LogText = log.LogText;
+            mlog.LogTime = log.LogTime?.AddHours(8);
+            mlog.Milliseconds = log.Milliseconds;
+            mlog.LogType = (int)log.LogType;
+            await _mongoRepository.InsertAsync(mlog);
+            #endregion
+
             var result = false;
             var list = await _dbContext.QzRunLogs.Where(x => x.TasksQzId == log.TasksQzId && x.AppId == log.AppId).ToListAsync();
             if (list.Count >= _logCount.ObjToInt())
@@ -84,15 +95,6 @@ namespace QuartzCore.Service
             }
             await _dbContext.QzRunLogs.AddAsync(log);
             int x = await _dbContext.SaveChangesAsync();
-
-            QzRunLogMoEntity mlog = new QzRunLogMoEntity();
-            mlog.AppId = log.AppId;
-            mlog.TasksQzId = log.TasksQzId;
-            mlog.LogText = log.LogText;
-            mlog.LogTime = log.LogTime?.AddHours(8);
-            mlog.Milliseconds = log.Milliseconds;
-            mlog.LogType = (int)log.LogType;
-            await _mongoRepository.InsertAsync(mlog);
 
             result = x > 0;
             return result;
