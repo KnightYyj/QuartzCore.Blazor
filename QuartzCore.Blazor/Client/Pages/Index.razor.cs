@@ -24,6 +24,8 @@ namespace QuartzCore.Blazor.Client.Pages
 
         protected override async Task OnInitializedAsync()
         {
+            
+
             await OnQuery();
             await base.OnInitializedAsync();
         }

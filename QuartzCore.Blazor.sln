@@ -23,7 +23,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuartzCore.Tasks", "QuartzC
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{A8950394-1C09-40DA-B544-58DB8F8E8CBD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuartzCore.Test", "QuartzCore.Test\QuartzCore.Test.csproj", "{45397D1C-A3A4-417D-A15A-F4C2105226F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuartzCore.Test", "QuartzCore.Test\QuartzCore.Test.csproj", "{45397D1C-A3A4-417D-A15A-F4C2105226F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuartzCore.MongoDB", "QuartzCore.MongoDB\QuartzCore.MongoDB.csproj", "{ADA7E183-D714-42E4-87E7-9365FDFD192F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +73,10 @@ Global
 		{45397D1C-A3A4-417D-A15A-F4C2105226F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45397D1C-A3A4-417D-A15A-F4C2105226F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45397D1C-A3A4-417D-A15A-F4C2105226F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADA7E183-D714-42E4-87E7-9365FDFD192F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADA7E183-D714-42E4-87E7-9365FDFD192F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADA7E183-D714-42E4-87E7-9365FDFD192F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADA7E183-D714-42E4-87E7-9365FDFD192F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\QuartzCore.Data.Entity\QuartzCore.Data.Entity.csproj" />
     <ProjectReference Include="..\..\QuartzCore.Data.Freesql\QuartzCore.Data.Freesql.csproj" />
+    <ProjectReference Include="..\..\QuartzCore.MongoDB\QuartzCore.MongoDB.csproj" />
     <ProjectReference Include="..\..\QuartzCore.Service\QuartzCore.Service.csproj" />
     <ProjectReference Include="..\..\QuartzCore.Tasks\QuartzCore.Tasks.csproj" />
     <ProjectReference Include="..\Client\QuartzCore.Blazor.Client.csproj" />

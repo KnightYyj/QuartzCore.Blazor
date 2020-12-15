@@ -16,6 +16,7 @@ namespace QuartzCore.Test
             {
                 lst.Add(dtime.AddHours(i * (-2)));
             }
+            Assert.Equal(12,lst.Count);
         }
     }
 }
