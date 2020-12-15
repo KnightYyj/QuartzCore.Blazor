@@ -43,8 +43,8 @@
                     <AntDesign.InputNumber @bind-Value="@context.IntervalSecond" Min="1" DefaultValue="60"></AntDesign.InputNumber>
                 </FormItem>
                 <FormItem Label="执行次数">
-                    <AntDesign.InputNumber @bind-Value="@context.RunTimes" Min="1" DefaultValue="60"></AntDesign.InputNumber>
-                    <span style="float:right;color: #aaa;">(Simple模式：执行满次数，自动退出；配置0：默认一直执行)</span>
+                    <AntDesign.InputNumber @bind-Value="@context.RunTimes" Min="0" DefaultValue="60"></AntDesign.InputNumber>
+                    <span style="float:right;color: #aaa;">(Simple模式：默认一直执行)</span>
                 </FormItem>
             }
             <FormItem Label="是否Http">

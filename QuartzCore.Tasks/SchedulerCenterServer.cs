@@ -284,10 +284,11 @@ namespace QuartzCore.Tasks
         /// <returns></returns>
         private ITrigger CreateSimpleTrigger(TasksQzEntity qzModel)
         {
+            /*
             if (qzModel.RunTimes > 0)
             {
                 ITrigger trigger = TriggerBuilder.Create()
-                     .StartNow()
+                //.StartNow()
                 .WithIdentity(qzModel.Id.ToString(), qzModel.AppId)
                 .WithSimpleSchedule(x =>
                 x.WithIntervalInSeconds(qzModel.IntervalSecond)
@@ -298,14 +299,22 @@ namespace QuartzCore.Tasks
             else
             {
                 ITrigger trigger = TriggerBuilder.Create()
-                .StartNow()
+                //.StartNow()
                 .WithIdentity(qzModel.Id.ToString(), qzModel.AppId)
                 .WithSimpleSchedule(x =>
                 x.WithIntervalInSeconds(qzModel.IntervalSecond)
                 .RepeatForever()).ForJob(qzModel.Id.ToString(), qzModel.AppId).Build();
                 return trigger;
             }
-            // 触发作业立即运行，然后每10秒重复一次，无限循环
+            */
+
+            ITrigger trigger = TriggerBuilder.Create()
+               //.StartNow() // 触发作业立即运行，然后每10秒重复一次，无限循环
+               .WithIdentity(qzModel.Id.ToString(), qzModel.AppId)
+               .WithSimpleSchedule(x =>
+               x.WithIntervalInSeconds(qzModel.IntervalSecond)
+               .RepeatForever()).ForJob(qzModel.Id.ToString(), qzModel.AppId).Build();
+            return trigger;
 
         }
 
@@ -321,10 +330,10 @@ namespace QuartzCore.Tasks
             // 作业触发器
             return TriggerBuilder.Create()
                    .WithIdentity(qzModel.Id.ToString(), qzModel.AppId)
-                   //.StartAt(qzModel.BeginTime.Value)//开始时间
-                   //.EndAt(qzModel.EndTime.Value)//结束数据
+                    //.StartAt(qzModel.BeginTime.Value)//开始时间
+                    //.EndAt(qzModel.EndTime.Value)//结束数据
                    .WithCronSchedule(qzModel.Cron)//指定cron表达式
-                   .StartNow()
+                    //.StartNow()
                    .ForJob(qzModel.Id.ToString(), qzModel.AppId)//作业名称
                    .Build();
         }
