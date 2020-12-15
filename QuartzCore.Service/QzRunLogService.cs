@@ -21,12 +21,12 @@ namespace QuartzCore.Service
 
         //private static object _syncObj = new object();
 
-        IMongoRepository<QzRunLogMoEntity> _mongoRepository;
+        //IMongoRepository<QzRunLogMoEntity> _mongoRepository;
 
-        public QzRunLogService(FreeSqlContext context, IMongoRepository<QzRunLogMoEntity> mongoRepository)
+        public QzRunLogService(FreeSqlContext context)
         {
             _dbContext = context;
-            _mongoRepository = mongoRepository;
+            //_mongoRepository = mongoRepository;
         }
 
         //public async Task<List<TasksQzEntity>> GetAsync()
@@ -85,14 +85,14 @@ namespace QuartzCore.Service
             await _dbContext.QzRunLogs.AddAsync(log);
             int x = await _dbContext.SaveChangesAsync();
 
-            QzRunLogMoEntity mlog = new QzRunLogMoEntity();
-            mlog.AppId = log.AppId;
-            mlog.TasksQzId = log.TasksQzId;
-            mlog.LogText = log.LogText;
-            mlog.LogTime = log.LogTime?.AddHours(8);
-            mlog.Milliseconds = log.Milliseconds;
-            mlog.LogType = (int)log.LogType;
-            await _mongoRepository.InsertAsync(mlog);
+            //QzRunLogMoEntity mlog = new QzRunLogMoEntity();
+            //mlog.AppId = log.AppId;
+            //mlog.TasksQzId = log.TasksQzId;
+            //mlog.LogText = log.LogText;
+            //mlog.LogTime = log.LogTime?.AddHours(8);
+            //mlog.Milliseconds = log.Milliseconds;
+            //mlog.LogType = (int)log.LogType;
+            //await _mongoRepository.InsertAsync(mlog);
 
             result = x > 0;
             return result;
