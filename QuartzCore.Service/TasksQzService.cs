@@ -19,14 +19,14 @@ namespace QuartzCore.Service
     public class TasksQzService : ITasksQzService
     {
         private FreeSqlContext _dbContext;
-        IMongoRepository<QzRunLogMoEntity> _mongoRepository;
+        //IMongoRepository<QzRunLogMoEntity> _mongoRepository;
 
 
 
-        public TasksQzService(FreeSqlContext context, IMongoRepository<QzRunLogMoEntity> mongoRepository)
+        public TasksQzService(FreeSqlContext context)
         {
             _dbContext = context;
-            _mongoRepository = mongoRepository;
+            //_mongoRepository = mongoRepository;
         }
 
         public bool isValidExpression(string expstr)
@@ -148,28 +148,28 @@ namespace QuartzCore.Service
             messageModel.msg = "成功";
 
 
-            List<ChartDic> lst = new List<ChartDic>();
-            DateTime dtime = DateTime.Now;
-            var result2 = _mongoRepository.GetListAsync().Result;
-            var builder = Builders<QzRunLogMoEntity>.Filter;
-            //表达式中自动生成的时间是UTC 所以这边需要先转东八区
-            var filter = builder.Where(d => d.LogTime > dtime.AddHours(-25).AddHours(8) && d.LogTime < dtime.AddHours(8));
-            var result = _mongoRepository.GetAsync(filter).Result;
+            //List<ChartDic> lst = new List<ChartDic>();
+            //DateTime dtime = DateTime.Now;
+            //var result2 = _mongoRepository.GetListAsync().Result;
+            //var builder = Builders<QzRunLogMoEntity>.Filter;
+            ////表达式中自动生成的时间是UTC 所以这边需要先转东八区
+            //var filter = builder.Where(d => d.LogTime > dtime.AddHours(-25).AddHours(8) && d.LogTime < dtime.AddHours(8));
+            //var result = _mongoRepository.GetAsync(filter).Result;
 
-            List<ChartData> data2 = new List<ChartData>();
-            for (int i = 12; i > 0; i--)
-            {
-                var gtTime = dtime.AddHours(i * (-2)).ToString("yyyy-MM-dd HH:00:00");
-                var ltTime = dtime.AddHours((i-1) * (-2)).ToString("yyyy-MM-dd HH:00:00");
-                var val = result.FindAll(x => x.LogTime >= gtTime.ObjToDate() && x.LogTime < ltTime.ObjToDate());
-                ChartData dic = new ChartData();
-                dic.date = $"{gtTime.Split(' ')[1]}~{ltTime.Split(' ')[1]}";
-                //dic.order = i;
-                dic.value = val.Count;
-                //lst.Add(dic);
-                data2.Add(dic);
-            }
-            /*
+            //List<ChartData> data2 = new List<ChartData>();
+            //for (int i = 12; i > 0; i--)
+            //{
+            //    var gtTime = dtime.AddHours(i * (-2)).ToString("yyyy-MM-dd HH:00:00");
+            //    var ltTime = dtime.AddHours((i-1) * (-2)).ToString("yyyy-MM-dd HH:00:00");
+            //    var val = result.FindAll(x => x.LogTime >= gtTime.ObjToDate() && x.LogTime < ltTime.ObjToDate());
+            //    ChartData dic = new ChartData();
+            //    dic.date = $"{gtTime.Split(' ')[1]}~{ltTime.Split(' ')[1]}";
+            //    //dic.order = i;
+            //    dic.value = val.Count;
+            //    //lst.Add(dic);
+            //    data2.Add(dic);
+            //}
+            
             ChartData[] data2 =
             {
         new ChartData{date = "00:00:00~02:00:00", value = 1},
@@ -180,11 +180,11 @@ namespace QuartzCore.Service
         new ChartData{date =  "10:00:00~12:00:00", value = 16},
         new ChartData{date =  "12:00:00~14:00:00", value = 17},
         new ChartData{date =  "14:00:00~16:00:00", value = 9},
-        new ChartData{date =  "16:00:00~18:00:00", value = 0},
+        new ChartData{date =  "16:00:00~18:00:00", value = 2},
         new ChartData{date =  "18:00:00~20:00:00", value = 0},
         new ChartData{date =  "20:00:00~22:00:00", value = 0},
         new ChartData{date =  "22:00:00~24:00:00", value = 0}
-    };*/
+    };
             messageModel.response.ChartDatas = data2.ToArray();
             return messageModel;
         }
