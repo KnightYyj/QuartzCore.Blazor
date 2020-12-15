@@ -40,7 +40,7 @@ sudo docker run --name qzBlazor -e db:provider=sqlite -e db:conn="Data Source=de
 
 在线项目演示：
 
-http://49.232.221.48:5001   (blazor wasm 首次加载会慢一些)
+✔ [在线展示](http://49.232.221.48:5001)  (blazor wasm 首次加载会慢一些)
 
 首页监控
 ![01](https://github.com/SmartforXiaoYuan/QuartzCore.Blazor/blob/master/Picture/first.jpg)
