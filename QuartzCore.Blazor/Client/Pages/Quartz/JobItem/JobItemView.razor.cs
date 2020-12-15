@@ -135,10 +135,10 @@ namespace QuartzCore.Blazor.Client.Pages.Quartz.JobItem
                     //await InvokeAsync(StateHasChanged);
                 }
                 else
-                    MsgSvr.Error($"{model.Name} 停止失败，错误:{result.msg}");
-
+                    MsgSvr.Error($"{model.Name} 停止失败，{result.msg}");
             }
         }
+    
 
         public async Task OnDelete(TasksQzDto model)
         {

@@ -157,7 +157,7 @@ namespace QuartzCore.Service
             var result = _mongoRepository.GetAsync(filter).Result;
 
             List<ChartData> data2 = new List<ChartData>();
-            for (int i = 12; i > 0; i--)
+            for (int i = 12; i >= 0; i--)
             {
                 var gtTime = dtime.AddHours(i * (-2)).ToString("yyyy-MM-dd HH:00:00");
                 var ltTime = dtime.AddHours((i-1) * (-2)).ToString("yyyy-MM-dd HH:00:00");
@@ -168,6 +168,10 @@ namespace QuartzCore.Service
                 dic.value = val.Count;
                 //lst.Add(dic);
                 data2.Add(dic);
+                if (data2.Count > 12)
+                {
+                    data2.RemoveAt(0);
+                }
             }
             /*
             ChartData[] data2 =

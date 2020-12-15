@@ -156,9 +156,7 @@ SimpleTrigger模式下 WithRepeatCount 若设置了自动退出，目前需要�
 
 ### 结尾
 
-本项目的[**初衷**]()主要也是实践了blazor和freesql想分享大家，如果你对blazor感兴趣，可以关注下*Ant Design* of *Blazor* (以下简称 Ant*Blazor*) 如果对freesql感兴趣也可以关注下freesql , 如果有人用到qz定时作业，也可以直接用本项目，我也很开心欢迎大家提issues。
+本项目的在于提供快捷方便的轻量级可视化quartz配置中心。如你使用中有遇到问题 可以提issue或者提交pro
 
-初认Blazor-->到实践，Blazor类似Vue Cli 官网说明也很简单用C#代替js交互， wasm模式。同样也是前后分离。使用HttpClient调用 Web API，本项目为了方便部署就建了同一个Host，只需要再startup中指定Endpoints。目前wasm的Blazor性能还有很大提升空间。大家可以多关注Blazor以及ant-design-blazor、ant-design-blazor还是起步阶段，本次使用体会下来，还有很大的空间需要大家来开发优化，可能对于初学者来说UI文档不全，目前来说做需求时候有点吃力。最后对blazor感兴趣的小伙伴可以关注下Ant*Blazor*和BootstrapBlazor 目前觉得BootstrapBlazor库稍微全一点
-
-**如果你有更好的建议可以提issue或者提交pro 。感谢大家**
+**感谢大家**
 
