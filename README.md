@@ -77,15 +77,14 @@ http://49.232.221.48:5001   (blazor wasm 首次加载会慢一些)
 
 - QuartzCore.Blazor.Client是单独的前端(类似vue，编译生成是静态文件)
 ![07](https://github.com/SmartforXiaoYuan/QuartzCore.Blazor/blob/master/Picture/blazorapp.jpg)
-
-​																							(项目文件)
+​(项目文件)
 ![08](https://github.com/SmartforXiaoYuan/QuartzCore.Blazor/blob/master/Picture/bbianyi.jpg)
-​																							(编译生成)
+​(编译生成)
 
 - QuartzCore.Blazor.Share
 
   ![09](https://github.com/SmartforXiaoYuan/QuartzCore.Blazor/blob/master/Picture/shared.jpg)
-  ​																							(Share)
+  ​(Share)
 
 - QuartzCore.Blazor.Server（api层）正好也是10层，哈哈
 
