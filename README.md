@@ -8,9 +8,24 @@
 5. 支持随时修改Trigger,启动立刻生效，无需重启应用
 6. 使用Freesql为数据访问组件，亦可学习交流
 
-## 记录
-1.删除了no_mongo分支,若不使用mongo自行注释
-2.修复post请求传参,默认需要JSON格式
+## 更新记录
+1. 删除了no_mongo分支,若不使用mongo自行注释
+2. 修复post请求传参,默认需要JSON格式
+3. 目前初版功能上大体实现，但耦合度太高，下一步计划把数据库操作,抽象化, 调用任务抽象化。dev_qzbv2分支，matser主分支，先维护已知bug
+
+### Todo
+
+- [ ] 暂无登陆，初始化管理员密码，第一次运行程序需要初始化管理员密码
+
+- [ ] IDS4
+
+- [ ] 监听任务状态，避免运行状态不统一
+
+- [ ] 可支持手动上传DLL方式，动态加载dll并运行,热插拔(暂缓---个人觉得Job补偿机制webapi模式也够用)
+
+- [ ] ant-design-blazor的RangePicker时间选择器还未完善，无法选择具体的时间。目前只能选择日期
+
+- [ ] 首页图表比较丑，目前还没有适合的，要么组件冲突(因为已经使用ant-design-blazor)（有点遗憾）
 
 ## 给个星星! ⭐️
 
@@ -136,27 +151,16 @@ _scheduler.ScheduleJob是添加任务，需要等待触发时间才开始执行
 
 暂时解决方案：目前先选用PauseJob之后,再去DeleteJob
 
-##### To Do
+##### SimpleTrigger 
 
-SimpleTrigger模式下 WithRepeatCount 若设置了自动退出，目前需要手动更新下TasksQz.IsStart=false
+- [x] SimpleTrigger模式下 WithRepeatCount 若设置了自动退出，目前需要手动更新下TasksQz.IsStart=false
 
 
 
-### Todo
 
-- [ ] 暂无登陆，初始化管理员密码，第一次运行程序需要初始化管理员密码
 
-- [ ] IDS4
 
-- [ ] 监听任务状态，避免运行状态不统一
 
-- [ ] 可支持手动上传DLL方式，动态加载dll并运行,热插拔(暂缓---个人觉得Job补偿机制webapi模式也够用)
-
-- [ ] ant-design-blazor的RangePicker时间选择器还未完善，无法选择具体的时间。目前只能选择日期
-
-- [ ] 首页图表比较丑，目前还没有适合的，要么组件冲突(因为已经使用ant-design-blazor)，有点遗憾
-
-  
 
 ### 结尾
 
